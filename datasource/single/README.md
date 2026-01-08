@@ -12,7 +12,7 @@ This guide demonstrates how to use Camel Forage to run Camel Routes that interac
 
 Install forage plugin into Camel CLI tool by running:
 ```bash
-camel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+camel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='io.kaoto.forage' --version='1.0-SNAPSHOT' --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
 ```
 
 ## Quick Start
