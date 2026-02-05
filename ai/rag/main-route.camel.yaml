@@ -1,0 +1,23 @@
+- route:
+    id: route-4063
+    from:
+      uri: timer:yaml
+      parameters:
+        repeatCount: "1"
+      steps:
+        - setBody:
+              simple: '"Describe the Miles of Camels Car Rental cancellations policy for cancelling 24 hours before pickup. What is the refund amount?"'
+        - convertBodyTo:
+            id: convertBodyTo-1109
+            type: String
+        - unmarshal:
+            id: unmarshal-3445
+            json: {}
+        - to:
+            id: to-3384
+            uri: langchain4j-agent
+            parameters:
+              agentId: "#ollama"
+        - log:
+            id: log-4263
+            message: ${body}
