@@ -29,7 +29,6 @@
       steps:
         - transacted:
             id: transacted-3679
-            disabled: false
         - log:
             id: log-2507
             message: Attempting to book seat for event ${jq(.eventId)} for user
@@ -38,6 +37,7 @@
             id: to-1702
             uri: sql
             parameters:
+              dataSource: "#dataSource"
               query: UPDATE events SET available_seats = available_seats - 1 WHERE event_id =
                 ${jq(.eventId)} AND available_seats > 0
         - choice:

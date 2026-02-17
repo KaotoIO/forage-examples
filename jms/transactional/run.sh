@@ -15,5 +15,5 @@ echo "- Dead Letter Queue handling"
 echo ""
 
 camel run route.camel.yaml \
-  --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT

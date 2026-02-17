@@ -1,9 +1,3 @@
-- errorHandler:
-    deadLetterChannel:
-      deadLetterUri: jms:DLQ
-      redeliveryPolicy:
-        maximumRedeliveries: 2
-      useOriginalBody: true
 - route:
     id: producer-route
     from:
@@ -87,7 +81,7 @@
       id: dlq-consumer
       uri: jms
       parameters:
-        destinationName: DLQ2
+        destinationName: DLQ
         destinationType: queue
       steps:
         - log:

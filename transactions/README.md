@@ -34,13 +34,10 @@ Start PostgreSQL with the test database:
 camel infra run postgres
 ```
 
-And initialize the database with the following schema:
+Then create the schema:
 
-```sql
-CREATE TABLE test (
-    id INTEGER PRIMARY KEY,
-    action VARCHAR(255)
-);
+```bash
+./setup-db.sh
 ```
 
 ### ActiveMQ Artemis
@@ -77,11 +74,11 @@ forage.jms.transaction.node.id=xa-node1
 ### Using Camel JBang (YAML DSL)
 
 ```bash
-camel run transaction.camel.yaml \
-  --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT
+camel run transaction.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT
 ```
 
 ## What Happens
@@ -172,10 +169,10 @@ The example can be exported to a Camel Spring Boot project via
 
 ```bash
 camel export transaction.camel.yaml forage-connectionfactory.properties forage-datasource-factory.properties \
- --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT \
- --dep=org.apache.camel.forage:forage-jms-starter:1.0-SNAPSHOT \
- --dep=org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
- --dep=org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
+ --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
+ --dep=io.kaoto.forage:forage-jms-starter:1.0-SNAPSHOT \
+ --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+ --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
  --runtime=spring-boot --directory=spring-boot-export
 ```
 

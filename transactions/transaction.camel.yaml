@@ -9,6 +9,7 @@
       steps:
         - transacted:
             id: transacted-3665
+            ref: PROPAGATION_REQUIRED
         - log:
             id: log-1002
             message: Start transaction with message ${body} and event id ${headers.eventId}
@@ -26,7 +27,6 @@
             uri: jms
             parameters:
               destinationName: out
-              transacted: true
         - choice:
             id: choice-5474
             otherwise:

@@ -25,7 +25,7 @@ camel run main-route.camel.yaml forage-agent-factory.properties company-knowledg
       --dep=mvn:io.kaoto.forage:forage-model-embeddings-ollama:1.0-SNAPSHOT \
       --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.0-SNAPSHOT \
       --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.0-SNAPSHOTun Route.java --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
+      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.0-SNAPSHOT
 ```
 
 or run the script

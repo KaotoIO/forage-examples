@@ -28,96 +28,36 @@ The application handles event seat reservations through a file-based workflow:
 
 Run postgresql database with `camel infra run postgres`
 
-```sql
--- Create the events table to store event information
-CREATE TABLE events (
-    event_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    available_seats INT NOT NULL CHECK (available_seats >= 0)
-);
-
--- Create the bookings table to link users to events
-CREATE TABLE bookings (
-    booking_id SERIAL PRIMARY KEY,
-    event_id INT NOT NULL REFERENCES events(event_id),
-    user_id INT NOT NULL,
-    booking_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
--- Optional: Add an index for faster lookups
-CREATE INDEX idx_bookings_event_id ON bookings(event_id);
-```
-
-### 2. Insert Sample Data
-
-```sql
--- Insert a popular event with many seats
-INSERT INTO events (name, available_seats)
-VALUES ('Camel Development Conference', 150);
-
--- Insert an exclusive event with very limited seats
-INSERT INTO events (name, available_seats)
-VALUES ('Advanced Messaging Workshop', 1);
-```
-
-## Setup and Installation
-
-### 1. Build Forage Dependencies
-
-First, build the required Forage modules:
+Then create the schema and sample data:
 
 ```bash
-mvn clean install
+./setup-db.sh
 ```
 
-### 2. Install Forage Camel JBang Plugin
-
-```
-camel plugin add forage \
-  --command='forage' \
-  --description='Forage Camel JBang Plugin' \
-  --artifactId='camel-jbang-plugin-forage' \
-  --groupId='org.apache.camel.forage' \
-  --version='1.0-SNAPSHOT' \
-  --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
-```
+This creates the `events` and `bookings` tables and inserts sample event data.
 
 ## Running the Application
 
-### Option 1: Direct Camel JBang Execution
-
-Run the integration directly with Camel JBang:
-
 ```bash
-camel run book.camel.yaml forage-datasource-factory.properties \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
+camel run book.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
 ```
 
-or
+Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
 
 ```bash
-camel forage run book.camel.yaml forage-datasource-factory.properties
+camel forage run book.camel.yaml application.properties
 ```
 
-### Option 2: Spring Boot Export
-
-Export the integration as a Spring Boot application:
+### Spring Boot Export
 
 ```bash
-camel export book.camel.yaml forage-datasource-factory.properties \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+camel export book.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
   --runtime=spring-boot
 ```
-
-or
-
-```bash
-camel forage export book.camel.yaml forage-datasource-factory.properties --runtime=spring-boot
-```
-
-Then run the exported Spring Boot application:
 
 ```bash
 mvn spring-boot:run
@@ -160,6 +100,22 @@ cp booking-3.json data/inbox/
 5. **Booking Creation**: If successful, inserts a booking record
 6. **Transaction Commit**: Both operations succeed and transaction commits
 7. **Error Handling**: If seat unavailable, throws exception and rolls back transaction
+
+## Using the Forage Plugin
+
+The Forage Camel JBang plugin simplifies commands by automatically adding the required dependencies. Install it with:
+
+```bash
+camel plugin add forage \
+  --command='forage' \
+  --description='Forage Camel JBang Plugin' \
+  --artifactId='camel-jbang-plugin-forage' \
+  --groupId='io.kaoto.forage' \
+  --version='1.0-SNAPSHOT' \
+  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+```
+
+Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
 
 ## Key Features Demonstrated
 
