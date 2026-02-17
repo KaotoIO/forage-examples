@@ -3,3 +3,4 @@ ObjectStore
 .camel-jbang
 PutObjectStoreDirHere
 .DS_Store
+.error

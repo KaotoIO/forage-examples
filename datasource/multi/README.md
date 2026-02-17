@@ -8,13 +8,6 @@ This project demonstrates how to use Camel Forage to run Apache Camel routes tha
 - Apache Camel CLI
 - Maven (for Spring Boot export)
 
-## Forage setup
-
-Install forage plugin into Camel CLI tool by running:
-```bash
-camel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
-```
-
 ## Database Setup
 
 ### MySQL Database
@@ -32,15 +25,6 @@ docker run -e MYSQL_ROOT_PASSWORD=pwd -p3306:3306 mysql:latest
 - Password: `pwd`
 - JDBC URL: `jdbc:mysql://localhost:3306`
 
-**Create test data:**
-
-```sql
-CREATE DATABASE test;
-CREATE TABLE test.foo(id INTEGER PRIMARY KEY, content VARCHAR(255));
-INSERT INTO test.foo VALUES (1, 'mysql 1');
-INSERT INTO test.foo VALUES (2, 'mysql 2');
-```
-
 ### PostgreSQL Database
 
 Start a PostgreSQL container using Camel infrastructure:
@@ -56,66 +40,81 @@ camel infra run postgres
 - Password: `test`
 - JDBC URL: `jdbc:postgresql://localhost:5432/postgres`
 
-**Create test data:**
+### Create Test Data
 
-```sql
-CREATE TABLE bar(id INTEGER PRIMARY KEY, content VARCHAR);
-INSERT INTO bar VALUES (1, 'postgres 1');
-INSERT INTO bar VALUES (2, 'postgres 2');
+Once both databases are running, create the schemas and sample data:
+
+```bash
+./setup-db.sh
 ```
+
+This creates the MySQL `test.foo` table and the PostgreSQL `bar` table with sample rows.
 
 ## Running the Integration
 
-### Camel CLI
-
-Execute the integration with the following command.
-* For Spring Boot runtime:
-
 ```bash
-camel forage run forage-datasource-factory.properties \
-          route.camel.yaml \
-          --runtime=spring-boot
-```
-* For Quarkus runtime:
-```bash
-camel forage run forage-datasource-factory.properties \
-          route.camel.yaml \
-          --runtime=spring-boot
+camel run route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT
 ```
 
-The integration creates two datasources (`ds1` and `ds2`) that can be referenced in Camel routes following Camel best practices. Configuration is managed through the properties file
-- `forage-datasource-factory.properties` - Datasources settings
+Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
+
+```bash
+camel forage run route.camel.yaml application.properties
+```
+
+The integration creates two datasources (`ds1` and `ds2`) that can be referenced in Camel routes following Camel best practices.
 
 ### Export
 
-Export the project to a Camel Spring Boot application:
+Export the project to a Spring Boot or Quarkus application:
 
-#### Spring Boot runtime
+#### Spring Boot
 
 ```bash
-camel forage export forage-datasource-factory.properties \
-            route.camel.yaml \
-            --runtime=spring-boot \
-            --gav=com.foo:acme:1.0-SNAPSHOT
+camel export route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT \
+  --runtime=spring-boot \
+  --gav=com.foo:acme:1.0-SNAPSHOT
 ```
-
-Run the application:
 
 ```bash
 mvn spring-boot:run
 ```
 
-#### For Quuarkus runtime:
+#### Quarkus
+
 ```bash
-camel forage export forage-datasource-factory.properties \
-            route.camel.yaml \
-            --runtime=quarkus 
+camel export route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT \
+  --runtime=quarkus
 ```
-and run the application:
 
 ```bash
 mvn clean compile quarkus:dev
 ```
+
+## Using the Forage Plugin
+
+The Forage Camel JBang plugin simplifies commands by automatically adding the required dependencies. Install it with:
+
+```bash
+camel plugin add forage \
+  --command='forage' \
+  --description='Forage Camel JBang Plugin' \
+  --artifactId='camel-jbang-plugin-forage' \
+  --groupId='io.kaoto.forage' \
+  --version='1.0-SNAPSHOT' \
+  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+```
+
+Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
 
 ## Features
 

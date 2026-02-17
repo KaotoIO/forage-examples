@@ -39,33 +39,33 @@ The aggregation completes when either condition is met:
    ```
 
 2. **Create the aggregation tables**
-   ```sql
-   CREATE TABLE event_aggregation (
-           id varchar(255) NOT NULL,
-           exchange bytea NOT NULL,
-           version BIGINT NOT NULL,
-           constraint event_aggregation_pk PRIMARY KEY (id)
-   );
-
-   CREATE TABLE event_aggregation_completed (
-           id varchar(255) NOT NULL,
-           exchange bytea NOT NULL,
-           version BIGINT NOT NULL,
-           constraint event_aggregation_completed_pk PRIMARY KEY (id)
-   );
+   ```bash
+   ./setup-db.sh
    ```
 
 ### Run the Integration
 
 ```bash
-camel forage run event-batching.camel.yaml forage-datasource-factory.properties org/forage/MyAggregationStrategy.java --dep=org.kaoto:kaoto-camel-manager:1.0-SNAPSHOT
+camel run event-batching.camel.yaml application.properties org/forage/MyAggregationStrategy.java \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
 ```
 
 ### Send Test Events
 
-Send events to the `direct:events` endpoint with an `eventId` header. Events with the same `eventId` will be batched together.
+Send events to the `direct:events` endpoint using `camel cmd send`. Events with the same `eventId` will be batched together.
 
-To do so, kaoto-camel-manager UI can be used, open `/path/to/kaoto-camel-manager/test-vertx-sse-client.html` in the browser and update the `Message Production:` section with `direct:events`, and the header `eventId`.
+```bash
+# Send 3 events with eventId=1 (batch completes after 5s timeout)
+camel cmd send --body="Event 1" --header="eventId=1" --endpoint="direct:events" event-batching
+camel cmd send --body="Event 2" --header="eventId=1" --endpoint="direct:events" event-batching
+camel cmd send --body="Event 3" --header="eventId=1" --endpoint="direct:events" event-batching
+
+# Send 5 events with eventId=2 (batch completes immediately by size)
+for i in 1 2 3 4 5; do
+  camel cmd send --body="Batch $i" --header="eventId=2" --endpoint="direct:events" event-batching
+done
+```
 
 ## Example Output
 

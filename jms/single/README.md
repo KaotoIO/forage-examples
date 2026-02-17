@@ -5,7 +5,11 @@ This example demonstrates how to use Camel Forage to automatically configure a J
 ## Prerequisites
 
 1. **ActiveMQ Artemis** running on `localhost:61616`
-   ```bash
+  ```bash
+  camel infra run artemis
+  ```
+
+  or ```bash
    # Using Docker
    docker run -it --rm \
      -p 61616:61616 \
@@ -37,13 +41,17 @@ The `forage-connectionfactory.properties` file configures the JMS connection:
 ### Using Camel JBang (Java DSL)
 
 ```bash
-camel run Route.java --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
+camel run Route.java application.properties \
+  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT
 ```
 
 ### Using Camel JBang (YAML DSL)
 
 ```bash
-camel run route.camel.yaml --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
+camel run route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT
 ```
 
 ## Features Demonstrated

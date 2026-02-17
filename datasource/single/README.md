@@ -8,13 +8,6 @@ This guide demonstrates how to use Camel Forage to run Camel Routes that interac
 - PostgreSQL database
 - Maven (for Spring Boot export)
 
-## Forage setup
-
-Install forage plugin into Camel CLI tool by running:
-```bash
-camel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='io.kaoto.forage' --version='1.0-SNAPSHOT' --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
-```
-
 ## Quick Start
 
 ### 1. Start PostgreSQL Database
@@ -34,70 +27,76 @@ camel infra run postgres
 
 ### 2. Set Up Test Data
 
-Connect to your PostgreSQL instance and create a sample table with test data:
+Create the sample table with test data:
 
-```sql
-CREATE TABLE bar (
-    id INTEGER PRIMARY KEY,
-    content VARCHAR(255)
-);
-
-INSERT INTO bar VALUES (1, 'postgres 1');
-INSERT INTO bar VALUES (2, 'postgres 2');
+```bash
+./setup-db.sh
 ```
+
+This creates the `bar` table and inserts sample rows.
 
 ### 3. Run the Integration
 
-Execute the Camel route with the required dependencies:
-
-* For the Spring Boot runtime:
 ```bash
-camel forage run route.camel.yaml forage-datasource-factory.properties --runtime=spring-boot
+camel run route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
 ```
 
-* For the Quarkus runtime:
+Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
+
 ```bash
-camel forage run route.camel.yaml forage-datasource-factory.properties --runtime=quarkus
+camel forage run route.camel.yaml application.properties
 ```
 
 ## DataSource Configuration
 
 The integration automatically creates a single datasource named `dataSource` following Camel's naming conventions. This datasource is immediately available for use with Camel components, particularly the `sql` component, without additional configuration.
 
-## Export to Spring Boot
+## Export
 
-To convert your integration into a Spring Boot application:
+### Spring Boot
 
-* For the Spring Boot runtime:
 ```bash
-camel forage export route.camel.yaml forage-datasource-factory.properties \
-    --runtime=spring-boot \
-    --gav=com.foo:acme:1.0-SNAPSHOT
-```
-* For the Quarkus runtime:
-```bash
-camel forage export route.camel.yaml forage-datasource-factory.properties --runtime=quarkus
+camel export route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --runtime=spring-boot \
+  --gav=com.foo:acme:1.0-SNAPSHOT
 ```
 
-### Running the  Application
-
-Start the exported  application:
-
-* For the Spring Boot runtime:
 ```bash
 mvn spring-boot:run
 ```
 
-* For the Quarkus Boot runtime:
+### Quarkus
+
+```bash
+camel export route.camel.yaml application.properties \
+  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --runtime=quarkus
+```
+
 ```bash
 mvn clean compile quarkus:dev
 ```
 
-The console output will match the standalone integration. Additionally, if you include Spring Boot Web and Actuator dependencies, you'll gain access to:
+## Using the Forage Plugin
 
-- DataSource metrics and monitoring
-- Connection pool statistics
-- Health checks and endpoints
+The Forage Camel JBang plugin simplifies commands by automatically adding the required dependencies. Install it with:
+
+```bash
+camel plugin add forage \
+  --command='forage' \
+  --description='Forage Camel JBang Plugin' \
+  --artifactId='camel-jbang-plugin-forage' \
+  --groupId='io.kaoto.forage' \
+  --version='1.0-SNAPSHOT' \
+  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+```
+
+Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
 
 ## Features
 
