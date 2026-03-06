@@ -40,8 +40,8 @@ This creates the `events` and `bookings` tables and inserts sample event data.
 
 ```bash
 camel run book.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
 ```
 
 Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
@@ -54,8 +54,8 @@ camel forage run book.camel.yaml application.properties
 
 ```bash
 camel export book.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-starter:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
   --runtime=spring-boot
 ```
 
@@ -111,8 +111,8 @@ camel plugin add forage \
   --description='Forage Camel JBang Plugin' \
   --artifactId='camel-jbang-plugin-forage' \
   --groupId='io.kaoto.forage' \
-  --version='1.0-SNAPSHOT' \
-  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+  --version='1.1-SNAPSHOT' \
+  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.1-SNAPSHOT'
 ```
 
 Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.

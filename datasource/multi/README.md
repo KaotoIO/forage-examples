@@ -54,9 +54,9 @@ This creates the MySQL `test.foo` table and the PostgreSQL `bar` table with samp
 
 ```bash
 camel run route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.1-SNAPSHOT
 ```
 
 Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
@@ -75,11 +75,11 @@ Export the project to a Spring Boot or Quarkus application:
 
 ```bash
 camel export route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-starter:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.1-SNAPSHOT \
   --runtime=spring-boot \
-  --gav=com.foo:acme:1.0-SNAPSHOT
+  --gav=com.foo:acme:1.1-SNAPSHOT
 ```
 
 ```bash
@@ -90,9 +90,9 @@ mvn spring-boot:run
 
 ```bash
 camel export route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-mysql:1.0-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-mysql:1.1-SNAPSHOT \
   --runtime=quarkus
 ```
 
@@ -110,8 +110,8 @@ camel plugin add forage \
   --description='Forage Camel JBang Plugin' \
   --artifactId='camel-jbang-plugin-forage' \
   --groupId='io.kaoto.forage' \
-  --version='1.0-SNAPSHOT' \
-  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+  --version='1.1-SNAPSHOT' \
+  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.1-SNAPSHOT'
 ```
 
 Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
