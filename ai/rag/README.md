@@ -21,11 +21,11 @@ The `forage-agent-factory.properties` file configures the AI agent:
 
 ```bash
 camel run main-route.camel.yaml forage-agent-factory.properties company-knowledge-base.txt  \
-      --dep=mvn:io.kaoto.forage:forage-agent:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-model-embeddings-ollama:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.0-SNAPSHOT
+      --dep=mvn:io.kaoto.forage:forage-agent:1.1-SNAPSHOT \
+      --dep=mvn:io.kaoto.forage:forage-model-embeddings-ollama:1.1-SNAPSHOT \
+      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.1-SNAPSHOT \
+      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.1-SNAPSHOT \
+      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.1-SNAPSHOT
 ```
 
 or run the script
@@ -49,8 +49,8 @@ The response is written into console. Based on the information from the `company
 When the route is started without the RAG -> use the command
 ```bash
 camel run main-route.camel.yaml forage-agent-factory.properties company-knowledge-base.txt  \
-      --dep=mvn:io.kaoto.forage:forage-agent:1.0-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.0-SNAPSHOT
+      --dep=mvn:io.kaoto.forage:forage-agent:1.1-SNAPSHOT \
+      --dep=mvn:io.kaoto.forage:forage-model-ollama:1.1-SNAPSHOT
 ```
 
 The response does not contain full refund confirmation and should contain a disclaimer, that the terms may vary.

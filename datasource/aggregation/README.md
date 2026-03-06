@@ -35,7 +35,7 @@ The aggregation completes when either condition is met:
 
 1. **Start PostgreSQL**
    ```bash
-   camel infra run postgresql
+   camel infra run postgres
    ```
 
 2. **Create the aggregation tables**
@@ -47,8 +47,8 @@ The aggregation completes when either condition is met:
 
 ```bash
 camel run event-batching.camel.yaml application.properties org/forage/MyAggregationStrategy.java \
-  --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
 ```
 
 ### Send Test Events

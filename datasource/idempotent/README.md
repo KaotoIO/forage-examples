@@ -38,8 +38,8 @@ The `forage-datasource-factory.properties` file configures:
 2. **Run the integration**:
    ```bash
    camel run jdbc-idempotent.camel.yaml application.properties \
-     --dep=io.kaoto.forage:forage-jdbc:1.0-SNAPSHOT \
-     --dep=io.kaoto.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
+     --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
+     --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
    ```
 
 3. **Test idempotency**:

@@ -68,16 +68,16 @@ When transactions are enabled, Camel Forage will:
 
 ```bash
 camel run Route.java application.properties \
-  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.1-SNAPSHOT
 ```
 
 ### Using Camel JBang (YAML DSL)
 
 ```bash
 camel run route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jms-artemis:1.0-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jms:1.0-SNAPSHOT
+  --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
+  --dep=io.kaoto.forage:forage-jms:1.1-SNAPSHOT
 ```
 
 Or simply:
