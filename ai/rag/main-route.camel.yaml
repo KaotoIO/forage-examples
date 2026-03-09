@@ -15,9 +15,9 @@
             json: {}
         - to:
             id: to-3384
-            uri: langchain4j-agent
+            uri: langchain4j-agent:agent
             parameters:
-              agentId: "#ollama"
+              agent: '#ollama'
         - log:
             id: log-4263
             message: ${body}
