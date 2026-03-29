@@ -23,6 +23,10 @@ The application handles event seat reservations through a file-based workflow:
 - Maven 3.8+
 - PostgreSQL database running on localhost:5432
 - Apache Camel JBang
+- **Forage plugin** installed:
+  ```bash
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+  ```
 
 ### 1. Create Database Schema
 
@@ -39,23 +43,15 @@ This creates the `events` and `bookings` tables and inserts sample event data.
 ## Running the Application
 
 ```bash
-camel run book.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
+camel run book.camel.yaml application.properties
 ```
 
-Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
-
-```bash
-camel forage run book.camel.yaml application.properties
-```
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 ### Spring Boot Export
 
 ```bash
 camel export book.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc-starter:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
   --runtime=spring-boot
 ```
 
@@ -100,22 +96,6 @@ cp booking-3.json data/inbox/
 5. **Booking Creation**: If successful, inserts a booking record
 6. **Transaction Commit**: Both operations succeed and transaction commits
 7. **Error Handling**: If seat unavailable, throws exception and rolls back transaction
-
-## Using the Forage Plugin
-
-The Forage Camel JBang plugin simplifies commands by automatically adding the required dependencies. Install it with:
-
-```bash
-camel plugin add forage \
-  --command='forage' \
-  --description='Forage Camel JBang Plugin' \
-  --artifactId='camel-jbang-plugin-forage' \
-  --groupId='io.kaoto.forage' \
-  --version='1.1-SNAPSHOT' \
-  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.1-SNAPSHOT'
-```
-
-Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
 
 ## Key Features Demonstrated
 

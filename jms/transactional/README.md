@@ -4,6 +4,12 @@ This example demonstrates how to use Camel Forage with XA transactions for relia
 
 ## Prerequisites
 
+**Forage plugin** installed:
+
+```bash
+camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+```
+
 ActiveMQ Artemis running on `localhost:61616`:
 
 ```bash
@@ -67,18 +73,16 @@ When transactions are enabled, Camel Forage will:
 ### Using Camel JBang (Java DSL)
 
 ```bash
-camel run Route.java application.properties \
-  --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jms:1.1-SNAPSHOT
+camel run Route.java application.properties
 ```
 
 ### Using Camel JBang (YAML DSL)
 
 ```bash
-camel run route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jms:1.1-SNAPSHOT
+camel run route.camel.yaml application.properties
 ```
+
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 Or simply:
 ```bash

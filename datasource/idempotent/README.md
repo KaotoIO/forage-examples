@@ -17,7 +17,10 @@ The integration monitors the `data/inbox` directory for files and uses a Postgre
 
 - Apache Camel CLI installed
 - PostgreSQL accessible (default: localhost:5432)
-- Camel Forage JDBC dependencies available
+- **Forage plugin** installed:
+  ```bash
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+  ```
 
 ## Configuration
 
@@ -37,10 +40,9 @@ The `forage-datasource-factory.properties` file configures:
 
 2. **Run the integration**:
    ```bash
-   camel run jdbc-idempotent.camel.yaml application.properties \
-     --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
-     --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
+   camel run jdbc-idempotent.camel.yaml application.properties
    ```
+   The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 3. **Test idempotency**:
    - Copy `test.txt` into `data/inbox` → File is processed (logged and deleted)
