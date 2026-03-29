@@ -33,12 +33,17 @@ The aggregation completes when either condition is met:
 
 ### Prerequisites
 
-1. **Start PostgreSQL**
+1. **Install the Forage plugin**:
+   ```bash
+   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+   ```
+
+2. **Start PostgreSQL**
    ```bash
    camel infra run postgres
    ```
 
-2. **Create the aggregation tables**
+3. **Create the aggregation tables**
    ```bash
    ./setup-db.sh
    ```
@@ -46,10 +51,10 @@ The aggregation completes when either condition is met:
 ### Run the Integration
 
 ```bash
-camel run event-batching.camel.yaml application.properties org/forage/MyAggregationStrategy.java \
-  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
+camel run event-batching.camel.yaml application.properties org/forage/MyAggregationStrategy.java
 ```
+
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 ### Send Test Events
 

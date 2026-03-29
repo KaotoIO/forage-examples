@@ -7,6 +7,10 @@ This guide demonstrates how to use Camel Forage to run Camel Routes that interac
 - Apache Camel with Forage support
 - PostgreSQL database
 - Maven (for Spring Boot export)
+- **Forage plugin** installed:
+  ```bash
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+  ```
 
 ## Quick Start
 
@@ -38,16 +42,10 @@ This creates the `bar` table and inserts sample rows.
 ### 3. Run the Integration
 
 ```bash
-camel run route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT
+camel run route.camel.yaml application.properties
 ```
 
-Or using the [Forage Camel JBang plugin](#using-the-forage-plugin):
-
-```bash
-camel forage run route.camel.yaml application.properties
-```
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 ## DataSource Configuration
 
@@ -59,8 +57,6 @@ The integration automatically creates a single datasource named `dataSource` fol
 
 ```bash
 camel export route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc-starter:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
   --runtime=spring-boot \
   --gav=com.foo:acme:1.1-SNAPSHOT
 ```
@@ -73,30 +69,12 @@ mvn spring-boot:run
 
 ```bash
 camel export route.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
   --runtime=quarkus
 ```
 
 ```bash
 mvn clean compile quarkus:dev
 ```
-
-## Using the Forage Plugin
-
-The Forage Camel JBang plugin simplifies commands by automatically adding the required dependencies. Install it with:
-
-```bash
-camel plugin add forage \
-  --command='forage' \
-  --description='Forage Camel JBang Plugin' \
-  --artifactId='camel-jbang-plugin-forage' \
-  --groupId='io.kaoto.forage' \
-  --version='1.1-SNAPSHOT' \
-  --gav='io.kaoto.forage:camel-jbang-plugin-forage:1.1-SNAPSHOT'
-```
-
-Then use `camel forage run` and `camel forage export` instead of specifying `--dep` flags manually.
 
 ## Features
 

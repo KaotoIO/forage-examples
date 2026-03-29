@@ -26,6 +26,14 @@ This is a transaction demonstration scenario where:
 
 ## Prerequisites
 
+### Forage Plugin
+
+Install the forage plugin:
+
+```bash
+camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+```
+
 ### PostgreSQL
 
 Start PostgreSQL with the test database:
@@ -74,12 +82,10 @@ forage.jms.transaction.node.id=xa-node1
 ### Using Camel JBang (YAML DSL)
 
 ```bash
-camel run transaction.camel.yaml application.properties \
-  --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jms:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
-  --dep=io.kaoto.forage:forage-jdbc:1.1-SNAPSHOT
+camel run transaction.camel.yaml application.properties
 ```
+
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
 
 ## What Happens
 
@@ -169,10 +175,6 @@ The example can be exported to a Camel Spring Boot project via
 
 ```bash
 camel export transaction.camel.yaml forage-connectionfactory.properties forage-datasource-factory.properties \
- --dep=io.kaoto.forage:forage-jms-artemis:1.1-SNAPSHOT \
- --dep=io.kaoto.forage:forage-jms-starter:1.1-SNAPSHOT \
- --dep=io.kaoto.forage:forage-jdbc-postgresql:1.1-SNAPSHOT \
- --dep=io.kaoto.forage:forage-jdbc-starter:1.1-SNAPSHOT \
  --runtime=spring-boot --directory=spring-boot-export
 ```
 
