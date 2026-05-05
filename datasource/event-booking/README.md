@@ -25,7 +25,7 @@ The application handles event seat reservations through a file-based workflow:
 - Apache Camel JBang
 - **Forage plugin** installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.2-SNAPSHOT
   ```
 
 ### 1. Create Database Schema

@@ -9,7 +9,7 @@ This guide demonstrates how to use Camel Forage to run Camel Routes that interac
 - Maven (for Spring Boot export)
 - **Forage plugin** installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.2-SNAPSHOT
   ```
 
 ## Quick Start
@@ -58,7 +58,7 @@ The integration automatically creates a single datasource named `dataSource` fol
 ```bash
 camel export route.camel.yaml application.properties \
   --runtime=spring-boot \
-  --gav=com.foo:acme:1.1-SNAPSHOT
+  --gav=com.foo:acme:1.2-SNAPSHOT
 ```
 
 ```bash
