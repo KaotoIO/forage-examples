@@ -7,7 +7,7 @@ This example demonstrates how to use Camel Forage with XA transactions for relia
 **Forage plugin** installed:
 
 ```bash
-camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.1-SNAPSHOT
+camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.2-SNAPSHOT
 ```
 
 ActiveMQ Artemis running on `localhost:61616`:
