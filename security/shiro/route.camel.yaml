@@ -1,0 +1,48 @@
+- route:
+    id: secure-route
+    from:
+      id: secure-endpoint
+      uri: platform-http
+      parameters:
+        path: /api/secure
+      steps:
+        - process:
+            id: extract-credentials
+            ref: "#shiroTokenProcessor"
+        - policy:
+            id: shiro-policy
+            ref: shiroPolicy
+            steps:
+              - log:
+                  id: log-authenticated
+                  message: Authenticated user accessing secure endpoint
+              - setHeader:
+                  id: set-content-type
+                  name: Content-Type
+                  constant:
+                    expression: text/plain
+              - setBody:
+                  id: set-response
+                  constant:
+                    expression: Access granted - you have the required role
+
+- route:
+    id: public-route
+    from:
+      id: public-endpoint
+      uri: platform-http
+      parameters:
+        path: /api/public
+      steps:
+        - log:
+            id: log-public
+            message: Public endpoint accessed - no authentication required
+        - setHeader:
+            id: set-public-content-type
+            name: Content-Type
+            constant:
+              expression: text/plain
+        - setBody:
+            id: set-public-response
+            constant:
+              expression: This is a public endpoint
