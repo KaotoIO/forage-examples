@@ -1,0 +1,45 @@
+- route:
+    id: secure-route
+    from:
+      id: secure-endpoint
+      uri: platform-http
+      parameters:
+        path: /api/secure
+      steps:
+        - policy:
+            id: keycloak-policy
+            ref: keycloakPolicy
+            steps:
+              - log:
+                  id: log-authenticated
+                  message: Authenticated user accessing secure endpoint - token validated by Keycloak
+              - setHeader:
+                  id: set-content-type
+                  name: Content-Type
+                  constant:
+                    expression: text/plain
+              - setBody:
+                  id: set-response
+                  constant:
+                    expression: Access granted - Keycloak token is valid and role requirements met
+
+- route:
+    id: public-route
+    from:
+      id: public-endpoint
+      uri: platform-http
+      parameters:
+        path: /api/public
+      steps:
+        - log:
+            id: log-public
+            message: Public endpoint accessed - no authentication required
+        - setHeader:
+            id: set-public-content-type
+            name: Content-Type
+            constant:
+              expression: text/plain
+        - setBody:
+            id: set-public-response
+            constant:
+              expression: This is a public endpoint
