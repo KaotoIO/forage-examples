@@ -1,3 +1,22 @@
+- onException:
+    exception:
+      - org.apache.camel.CamelAuthorizationException
+    handled:
+      constant:
+        expression: "true"
+    steps:
+      - setHeader:
+          name: CamelHttpResponseCode
+          constant:
+            expression: "401"
+      - setHeader:
+          name: Content-Type
+          constant:
+            expression: text/plain
+      - setBody:
+          constant:
+            expression: Unauthorized - invalid or missing Keycloak token
+
 - route:
     id: secure-route
     from:

@@ -1,3 +1,41 @@
+- onException:
+    exception:
+      - org.apache.camel.CamelAuthorizationException
+    handled:
+      constant:
+        expression: "true"
+    steps:
+      - setHeader:
+          name: CamelHttpResponseCode
+          constant:
+            expression: "403"
+      - setHeader:
+          name: Content-Type
+          constant:
+            expression: text/plain
+      - setBody:
+          constant:
+            expression: Access denied - insufficient permissions
+
+- onException:
+    exception:
+      - org.apache.camel.NoSuchHeaderException
+    handled:
+      constant:
+        expression: "true"
+    steps:
+      - setHeader:
+          name: CamelHttpResponseCode
+          constant:
+            expression: "401"
+      - setHeader:
+          name: Content-Type
+          constant:
+            expression: text/plain
+      - setBody:
+          constant:
+            expression: Unauthorized - credentials required
+
 - route:
     id: secure-route
     from:
@@ -6,9 +44,6 @@
       parameters:
         path: /api/secure
       steps:
-        - process:
-            id: extract-credentials
-            ref: "#shiroTokenProcessor"
         - policy:
             id: shiro-policy
             ref: shiroPolicy
