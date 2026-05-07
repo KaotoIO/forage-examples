@@ -7,6 +7,7 @@ STUBS_DIR="$SCRIPT_DIR/wiremock"
 WIREMOCK_PORT="${WIREMOCK_PORT:-8443}"
 
 echo "=== Generating self-signed certificates ==="
+rm -rf "$CERTS_DIR"
 mkdir -p "$CERTS_DIR"
 
 # Generate server keystore with self-signed certificate
