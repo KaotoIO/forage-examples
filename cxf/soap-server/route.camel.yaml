@@ -24,20 +24,16 @@
         - setBody:
             constant:
               expression: >
-                <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                  <soap:Body>
-                    <sayHello xmlns="http://example.com/hello"><name>Forage</name></sayHello>
-                  </soap:Body>
-                </soap:Envelope>
+                <sayHello xmlns="http://example.com/hello"><name>Forage</name></sayHello>
         - setHeader:
-            name: CamelHttpMethod
+            name: operationName
             constant:
-              expression: POST
+              expression: sayHello
         - setHeader:
-            name: Content-Type
+            name: operationNamespace
             constant:
-              expression: text/xml
+              expression: "http://example.com/hello"
         - to:
-            uri: "http://localhost:8080/services/hello"
+            uri: cxf:bean:helloClient
         - log:
             message: "Test caller received response: ${body}"

@@ -20,9 +20,6 @@ This is a common enterprise scenario: you have a legacy SOAP service (SAP, ERP, 
 The `application.properties` file maps directly to the WSDL structure of the target service:
 
 ```properties
-# CXF endpoint type
-forage.cxf.kind=soap
-
 # Service endpoint address
 forage.cxf.address=http://localhost:8080/services/hello
 
@@ -104,11 +101,9 @@ cd /tmp/cxf-quarkus && mvn clean compile quarkus:dev
 To call multiple SOAP services, use named prefixes:
 
 ```properties
-forage.payment.cxf.kind=soap
 forage.payment.cxf.address=http://payment-svc:8080/ws/payment
 forage.payment.cxf.data.format=PAYLOAD
 
-forage.inventory.cxf.kind=soap
 forage.inventory.cxf.address=http://inventory-svc:8080/ws/stock
 forage.inventory.cxf.data.format=PAYLOAD
 ```

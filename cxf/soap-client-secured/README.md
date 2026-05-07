@@ -78,7 +78,6 @@ The truststore contains the server's certificate (or CA), allowing the CXF clien
 
 ```properties
 # CXF SOAP configuration
-forage.cxf.kind=soap
 forage.cxf.address=https://localhost:8443/ws/hello
 forage.cxf.wsdl.url=https://localhost:8443/ws/hello?wsdl
 forage.cxf.service.name={http://example.com/hello}HelloService

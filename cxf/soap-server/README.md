@@ -16,32 +16,30 @@ This is useful when you need to stand up a SOAP facade in front of modern servic
 The server uses a contract-first approach with a WSDL file (`hello.wsdl`) that defines the service contract:
 
 ```properties
-# CXF endpoint type
-forage.cxf.kind=soap
+# Server endpoint
+forage.helloServer.cxf.address=http://localhost:8080/services/hello
+forage.helloServer.cxf.wsdl.url=file:hello.wsdl
+forage.helloServer.cxf.service.name={http://example.com/hello}HelloService
+forage.helloServer.cxf.port.name={http://example.com/hello}HelloPort
+forage.helloServer.cxf.data.format=PAYLOAD
+forage.helloServer.cxf.logging.enabled=true
 
-# Address where the SOAP service will be exposed
-forage.cxf.address=http://localhost:8080/services/hello
-
-# WSDL contract (contract-first)
-forage.cxf.wsdl.url=file:hello.wsdl
-forage.cxf.service.name={http://example.com/hello}HelloService
-forage.cxf.port.name={http://example.com/hello}HelloPort
-
-# Data format: PAYLOAD for raw XML handling (no JAX-WS annotations needed)
-forage.cxf.data.format=PAYLOAD
-
-# Enable CXF message logging for request/response tracing
-forage.cxf.logging.enabled=true
+# Client endpoint (used by the test caller route)
+forage.helloClient.cxf.address=http://localhost:8080/services/hello
+forage.helloClient.cxf.wsdl.url=file:hello.wsdl
+forage.helloClient.cxf.service.name={http://example.com/hello}HelloService
+forage.helloClient.cxf.port.name={http://example.com/hello}HelloPort
+forage.helloClient.cxf.data.format=PAYLOAD
 ```
 
 Using `PAYLOAD` data format means you work with raw XML -- no need for JAX-WS service endpoint interfaces or `@WebService` annotations. The WSDL file defines the service contract, and Forage creates the `CxfEndpoint` from it.
 
 ## What Happens
 
-1. Forage reads the WSDL contract and creates a CXF server endpoint bound as `cxfEndpoint` in the Camel registry
+1. Forage creates two CXF endpoints: `helloServer` (server) and `helloClient` (client) in the Camel registry
 2. The server route listens for SOAP requests at `http://localhost:8080/services/hello`
 3. Incoming SOAP messages are logged and a response is returned
-4. A built-in test caller fires once after 5 seconds to verify the server works
+4. A built-in test caller uses `cxf:bean:helloClient` to send a SOAP request and verify the server works
 
 ## Running the Example
 
