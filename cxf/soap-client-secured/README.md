@@ -43,7 +43,7 @@ camel run *
 
 You should see:
 
-```
+```text
 Secured SOAP response: <sayHelloResponse ...>Hello Forage from secured CXF</sayHelloResponse>
 ```
 

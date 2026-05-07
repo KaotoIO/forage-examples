@@ -1,7 +1,11 @@
 {
   "request": {
     "method": "POST",
-    "url": "/ws/hello"
+    "url": "/ws/hello",
+    "basicAuthCredentials": {
+      "username": "admin",
+      "password": "secret"
+    }
   },
   "response": {
     "status": 200,

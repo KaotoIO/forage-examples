@@ -65,7 +65,7 @@ camel run *
 
 You should see:
 
-```
+```text
 SOAP response: <sayHelloResponse xmlns="http://example.com/hello"><greeting>Hello from CXF server</greeting></sayHelloResponse>
 ```
 
