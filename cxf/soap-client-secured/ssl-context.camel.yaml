@@ -1,0 +1,9 @@
+- beans:
+    - name: mySSLContext
+      type: org.apache.camel.support.jsse.SSLContextParameters
+      properties:
+        trustManagers:
+          keyStore:
+            resource: "file:certs/truststore.jks"
+            password: "changeit"
+            type: "JKS"
