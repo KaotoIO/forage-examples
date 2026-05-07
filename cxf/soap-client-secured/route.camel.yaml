@@ -20,6 +20,6 @@
             constant:
               expression: "http://example.com/hello"
         - to:
-            uri: cxf:bean:cxfEndpoint
+            uri: cxf:bean:securedClient
         - log:
             message: "Secured SOAP response: ${body}"

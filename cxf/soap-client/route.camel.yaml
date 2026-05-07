@@ -20,6 +20,6 @@
             constant:
               expression: "http://example.com/hello"
         - to:
-            uri: cxf:bean:cxfEndpoint
+            uri: cxf:bean:helloClient
         - log:
             message: "SOAP response: ${body}"
