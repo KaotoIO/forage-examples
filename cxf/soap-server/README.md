@@ -51,7 +51,7 @@ camel run *
 
 You should see:
 
-```
+```text
 Server received SOAP request
 Server sending SOAP response
 Test caller received response: <sayHelloResponse ...>Hello from CXF server</sayHelloResponse>

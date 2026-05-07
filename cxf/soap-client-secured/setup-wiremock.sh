@@ -29,6 +29,7 @@ echo "Certificates created in $CERTS_DIR"
 
 echo ""
 echo "=== Starting WireMock with HTTPS on port $WIREMOCK_PORT ==="
+docker rm -f forage-wiremock-https >/dev/null 2>&1 || true
 docker run -d --name forage-wiremock-https \
   -p "$WIREMOCK_PORT:8443" \
   -v "$CERTS_DIR/wiremock-keystore.jks:/certs/keystore.jks:ro" \
