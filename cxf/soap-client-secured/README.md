@@ -1,0 +1,144 @@
+# Camel Forage CXF Secured SOAP Client Example
+
+Call a SOAP web service secured with SSL/TLS and username/password authentication. Forage configures the CXF endpoint with both transport-level security (HTTPS) and message-level credentials -- all from properties.
+
+In enterprise environments, SOAP services are typically protected by TLS certificates and require authentication. Without Forage, this means programmatic CXF interceptor configuration, manual SSLContext setup, and Java bean wiring. With Forage, you add a few properties and a Camel SSL bean definition.
+
+## Prerequisites
+
+- **Camel JBang** with the Forage plugin installed:
+  ```bash
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.3-SNAPSHOT
+  ```
+- **Docker** (for the WireMock HTTPS mock server)
+- **keytool** (included with Java)
+
+> **Note:** Camel's CXF component supports SSL only on the client (producer) side. The SOAP Server example cannot be configured with TLS through Forage. Use a reverse proxy (e.g., Nginx) for server-side TLS termination.
+
+## Quick Start
+
+### 1. Start the HTTPS mock server
+
+The setup script generates self-signed certificates and starts a WireMock container with HTTPS:
+
+```bash
+./setup-wiremock.sh
+```
+
+This will:
+- Generate a self-signed keystore and truststore in `certs/`
+- Start WireMock on `https://localhost:8443` with WSDL and SOAP stubs
+
+Verify the mock server is running:
+
+```bash
+curl -sk https://localhost:8443/ws/hello?wsdl
+```
+
+### 2. Run the secured client
+
+```bash
+camel run *
+```
+
+You should see:
+
+```
+Secured SOAP response: <sayHelloResponse ...>Hello Forage from secured CXF</sayHelloResponse>
+```
+
+### 3. Clean up
+
+```bash
+docker rm -f forage-wiremock-https
+rm -rf certs/
+```
+
+## Configuration
+
+### SSL/TLS Setup (`ssl-context.camel.yaml`)
+
+The SSL context is defined as a Camel bean using Camel's built-in `SSLContextParameters`:
+
+```yaml
+- beans:
+    - name: mySSLContext
+      type: org.apache.camel.support.jsse.SSLContextParameters
+      properties:
+        trustManagers:
+          keyStore:
+            resource: "file:certs/truststore.jks"
+            password: "changeit"
+            type: "JKS"
+```
+
+The truststore contains the server's certificate (or CA), allowing the CXF client to verify the server during the TLS handshake.
+
+### Forage Properties (`application.properties`)
+
+```properties
+# CXF SOAP configuration
+forage.cxf.kind=soap
+forage.cxf.address=https://localhost:8443/ws/hello
+forage.cxf.wsdl.url=https://localhost:8443/ws/hello?wsdl
+forage.cxf.service.name={http://example.com/hello}HelloService
+forage.cxf.port.name={http://example.com/hello}HelloPort
+forage.cxf.data.format=PAYLOAD
+forage.cxf.logging.enabled=true
+
+# Authentication credentials
+forage.cxf.username=admin
+forage.cxf.password=secret
+
+# SSL/TLS -- references the SSLContextParameters bean by name
+forage.cxf.ssl.context.parameters=mySSLContext
+```
+
+The key additions compared to the [basic SOAP client](../soap-client/):
+
+- `forage.cxf.username` / `forage.cxf.password` -- credentials sent with each SOAP request
+- `forage.cxf.ssl.context.parameters` -- references the `mySSLContext` bean that configures the TLS trust chain
+
+## What Happens
+
+1. Camel loads the `SSLContextParameters` bean from `ssl-context.camel.yaml`
+2. Forage creates a CXF SOAP endpoint, wires in the SSL context and credentials
+3. The route fires once, sends a SOAP request over HTTPS with authentication
+4. CXF handles the TLS handshake, certificate validation, and credential injection
+
+## Features Demonstrated
+
+- [x] SSL/TLS transport security via `SSLContextParameters` bean
+- [x] Username/password authentication
+- [x] Secure WSDL fetching over HTTPS
+- [x] Self-contained test setup with WireMock HTTPS
+- [x] All security configured declaratively -- no CXF interceptor code
+
+## WireMock Stubs
+
+The `wiremock/` directory contains the mock configuration:
+
+- `mappings/wsdl.json` -- serves the WSDL at `GET /ws/hello?wsdl`
+- `mappings/soap-endpoint.json` -- responds to SOAP requests at `POST /ws/hello`
+- `__files/hello-service.wsdl` -- the WSDL document
+- `__files/soap-response.xml` -- the SOAP response body
+
+## Export
+
+```bash
+# Spring Boot
+camel export *.camel.yaml application.properties \
+  --runtime=spring-boot \
+  --gav=com.example:cxf-soap-secured:1.0-SNAPSHOT \
+  --directory=/tmp/cxf-secured-spring-boot
+
+cd /tmp/cxf-secured-spring-boot && mvn spring-boot:run
+
+# Quarkus
+camel export *.camel.yaml application.properties \
+  --runtime=quarkus \
+  --gav=com.example:cxf-soap-secured:1.0-SNAPSHOT \
+  --directory=/tmp/cxf-secured-quarkus
+
+cd /tmp/cxf-secured-quarkus && mvn clean compile quarkus:dev
+```

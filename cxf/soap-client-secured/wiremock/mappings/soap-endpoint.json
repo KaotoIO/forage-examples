@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/ws/hello"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "soap-response.xml",
+    "headers": {
+      "Content-Type": "text/xml"
+    }
+  }
+}

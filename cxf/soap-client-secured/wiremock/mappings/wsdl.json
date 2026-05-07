@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/ws/hello\\?wsdl"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "hello-service.wsdl",
+    "headers": {
+      "Content-Type": "text/xml"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <sayHelloResponse xmlns="http://example.com/hello">
+      <greeting>Hello Forage from secured CXF</greeting>
+    </sayHelloResponse>
+  </soap:Body>
+</soap:Envelope>
