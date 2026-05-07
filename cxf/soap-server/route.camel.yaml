@@ -2,7 +2,7 @@
     id: cxf-soap-server
     streamCache: false
     from:
-      uri: cxf:bean:cxfEndpoint
+      uri: cxf:bean:helloServer
       steps:
         - log:
             message: "Server received SOAP request"
