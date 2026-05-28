@@ -22,11 +22,11 @@ Launch PostgreSQL using Camel infrastructure:
 camel infra run postgres
 ```
 
-**Connection Details:**
-- Host: `localhost`
-- Port: `5432`
-- Username: `test`
-- Password: `test`
+**Connection Details (defaults):**
+- Host: `localhost` (override with `DB_HOST`)
+- Port: `5432` (override with `DB_PORT`)
+- Username: `test` (override with `DB_USER`)
+- Password: `test` (override with `DB_PASSWORD`)
 - JDBC URL: `jdbc:postgresql://localhost:5432/postgres`
 
 ### 2. Set Up Test Data
