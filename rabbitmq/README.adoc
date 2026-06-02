@@ -1,0 +1,118 @@
+= Camel Forage Spring RabbitMQ Example
+
+This example demonstrates how to use Camel Forage to automatically configure a Spring RabbitMQ ConnectionFactory with RabbitMQ.
+
+== Prerequisites
+
+. *Forage plugin* installed:
+ `bash
+   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.4-SNAPSHOT
+`
+
+. *RabbitMQ* running on `localhost:5672`
+ `bash
+   camel infra run rabbitmq
+`
+
+or
+
+`bash
+   # Using Docker
+   docker run -it --rm \
+     -p 5672:5672 \
+     -p 15672:15672 \
+     -e RABBITMQ_DEFAULT_USER=guest \
+     -e RABBITMQ_DEFAULT_PASS=guest \
+     rabbitmq:3-management
+`
+
+The RabbitMQ management UI will be available at http://localhost:15672 (guest/guest)
+
+== Configuration
+
+The `application.properties` file configures the RabbitMQ connection:
+
+* *Host*: `localhost` - RabbitMQ broker hostname
+* *Port*: `5672` - AMQP port
+* *Virtual Host*: `/` - Default virtual host
+* *Credentials*: Username/password for authentication (guest/guest)
+* *Auto-declare*: Automatically creates exchanges and queues
+
+== What Happens
+
+. *Automatic ConnectionFactory Creation*: Camel Forage automatically creates and configures a `CachingConnectionFactory` named `rabbitConnectionFactory` in the Camel registry
+. *Timer Producer*: Sends a message every 5 seconds to the `test.exchange` with routing key `test`
+. *RabbitMQ Consumer*: Receives and logs messages from `test.queue` bound to `test.exchange`
+
+== Running the Example
+
+=== Using Camel JBang (Java DSL)
+
+[source,bash]
+----
+camel run Route.java application.properties
+----
+
+=== Using Camel JBang (YAML DSL)
+
+[source,bash]
+----
+camel run route.camel.yaml application.properties
+----
+
+=== Using the helper script
+
+[source,bash]
+----
+./run.sh
+----
+
+The forage plugin auto-discovers the required dependencies from the properties files, so no `--dep` flags are needed.
+
+== Export
+
+Export the project to a Spring Boot or Quarkus application:
+
+=== Spring Boot
+
+[source,bash]
+----
+camel export route.camel.yaml application.properties \
+  --runtime=spring-boot \
+  --gav=com.foo:acme:1.4-SNAPSHOT \
+  --dir=spring-boot-rabbitmq
+----
+
+[source,bash]
+----
+cd spring-boot-rabbitmq
+mvn spring-boot:run
+----
+
+=== Quarkus
+
+[source,bash]
+----
+camel export route.camel.yaml application.properties \
+  --runtime=quarkus \
+  --dir=quarkus-rabbitmq
+----
+
+[source,bash]
+----
+cd quarkus-rabbitmq
+mvn clean compile quarkus:dev
+----
+
+== Features Demonstrated
+
+* ✅ Automatic Spring RabbitMQ ConnectionFactory configuration via properties
+* ✅ Connection caching with Spring's CachingConnectionFactory
+* ✅ Producer/Consumer pattern
+* ✅ Exchange and queue auto-declaration
+* ✅ Zero boilerplate - no manual ConnectionFactory setup needed
+
+== Additional Features
+
+Forage supports multiple connection factories using prefixed configuration (e.g., `forage.primary.spring.rabbitmq.host`), cluster failover with the `addresses` property, and different cache modes.
+See the https://kaotoio.github.io/forage/modules/spring-rabbitmq/[Forage Spring RabbitMQ documentation] for more details.
