@@ -1,0 +1,37 @@
+- route:
+    id: rabbitmq-producer-route
+    from:
+      id: timer-producer
+      uri: timer
+      parameters:
+        period: "5000"
+        timerName: producer
+      steps:
+        - setBody:
+            id: set-message-body
+            simple:
+              expression: Hello from Camel Forage Spring RabbitMQ!
+        - to:
+            id: send-to-rabbitmq
+            uri: spring-rabbitmq
+            parameters:
+              exchangeName: test.exchange
+              routingKey: test
+        - log:
+            id: log-sent
+            message: Message sent to RabbitMQ exchange
+
+- route:
+    id: rabbitmq-consumer-route
+    from:
+      id: rabbitmq-consumer
+      uri: spring-rabbitmq
+      parameters:
+        exchangeName: test.exchange
+        queues: test.queue
+        routingKey: test
+        connectionFactory: "#rabbitConnectionFactory"
+      steps:
+        - log:
+            id: log-received
+            message: "Message received from RabbitMQ: ${body}"
