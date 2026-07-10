@@ -1,6 +1,7 @@
 #!/bin/bash
 # Setup database schema for the XA Transactions example
-# Requires: PostgreSQL running on localhost:5432 (start with: camel infra run postgres)
+# Requires: PostgreSQL on localhost:5432 with max_prepared_transactions > 0
+# (XA two-phase commit; see README — the camel infra run postgres default disables it)
 
 set -e
 
