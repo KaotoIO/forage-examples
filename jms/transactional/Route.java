@@ -12,7 +12,10 @@ public class Route extends RouteBuilder {
                 .log("Sent message to input queue");
 
         // Transactional consumer - processes messages within XA transaction
-        from("jms:queue:input.queue?transacted=true")
+        // transacted must stay false with XA: the JTA transaction manager wired into the
+        // JMS component drives the transaction (IBM MQ rejects local transactions on XA
+        // connections with MQRC 2072)
+        from("jms:queue:input.queue?cacheLevelName=CACHE_NONE")
                 .transacted("PROPAGATION_REQUIRED")
                 .log("Processing message: ${body}")
                 .choice()
