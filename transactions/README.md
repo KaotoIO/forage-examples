@@ -36,11 +36,21 @@ camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.3-SNAPSHOT
 
 ### PostgreSQL
 
-Start PostgreSQL with the test database:
+Start PostgreSQL **with prepared transactions enabled** — a transaction spanning JMS and
+JDBC is a real two-phase commit, so Narayana issues `PREPARE TRANSACTION` against
+PostgreSQL. That fails with `ERROR: prepared transactions are disabled` on the default
+configuration (`max_prepared_transactions = 0`, which is also what `camel infra run
+postgres` starts with):
 
 ```bash
-camel infra run postgres
+docker run -d --name camel-postgres -p 5432:5432 \
+  -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test -e POSTGRES_DB=postgres \
+  postgres:16 -c max_prepared_transactions=100
 ```
+
+(Alternatively, on an existing server: `ALTER SYSTEM SET max_prepared_transactions = 100;`
+followed by a restart. The single-resource datasource examples don't need this — with one
+participant Narayana uses the one-phase-commit optimization.)
 
 Then create the schema:
 

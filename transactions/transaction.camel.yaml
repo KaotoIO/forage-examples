@@ -5,7 +5,8 @@
       uri: jms
       parameters:
         destinationName: in
-        transacted: true
+        # transacted must stay false with XA: the JTA transaction manager wired into
+        # the JMS component drives the transaction
         cacheLevelName: CACHE_NONE
       steps:
         - transacted:
