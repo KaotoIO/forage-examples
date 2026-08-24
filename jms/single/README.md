@@ -6,7 +6,7 @@ This example demonstrates how to use Camel Forage to automatically configure a J
 
 1. **Forage plugin** installed:
    ```bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.3-SNAPSHOT
+   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
    ```
 
 2. **ActiveMQ Artemis** running on `localhost:61616`

@@ -8,7 +8,7 @@ In enterprise environments, SOAP services are typically protected by TLS certifi
 
 - **Camel JBang** with the Forage plugin installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.3-SNAPSHOT
+  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
   ```
 - **Docker** (for the WireMock HTTPS mock server)
 - **keytool** (included with Java)
