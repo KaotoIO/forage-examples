@@ -30,7 +30,6 @@
         exchangeName: test.exchange
         queues: test.queue
         routingKey: test
-        connectionFactory: "#rabbitConnectionFactory"
       steps:
         - log:
             id: log-received
