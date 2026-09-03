@@ -13,14 +13,14 @@ This example demonstrates how to use Camel Forage to automatically configure a J
   ```bash
   camel infra run artemis
   ```
-
-  or ```bash
+  or
+  ```bash
    # Using Docker
    docker run -it --rm \
      -p 61616:61616 \
      -p 8161:8161 \
-     -e ARTEMIS_USERNAME=admin \
-     -e ARTEMIS_PASSWORD=admin \
+     -e ARTEMIS_USERNAME=artemis \
+     -e ARTEMIS_PASSWORD=artemis \
      apache/activemq-artemis:latest
    ```
 
