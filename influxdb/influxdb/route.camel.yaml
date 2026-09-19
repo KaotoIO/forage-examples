@@ -1,0 +1,22 @@
+- route:
+    id: influxdb-write
+    from:
+      uri: timer:write
+      parameters:
+        repeatCount: 1
+        delay: 1000
+      steps:
+        - setBody:
+            groovy: |
+              org.influxdb.dto.Point.measurement("temperature")
+                  .tag("sensor", "demo")
+                  .tag("room", "office")
+                  .addField("value", 21)
+                  .build()
+        - to:
+            uri: influxdb:influxdb
+            parameters:
+              databaseName: metrics
+              retentionPolicy: autogen
+        - log:
+            message: "InfluxDB 1 point sent: temperature, sensor=demo, room=office, value=21"
