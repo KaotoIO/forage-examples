@@ -68,6 +68,9 @@ Camel looks up the organization and bucket when starting the endpoint, so the
 token must allow those lookups as well as writes. The local example's admin token
 also permits the verification query.
 
+For real deployments, use a scoped token limited to these lookups and writes to
+the target bucket; add read access if you also need to query data.
+
 ## What Happens
 
 1. Forage creates the client from the properties and environment variable.
