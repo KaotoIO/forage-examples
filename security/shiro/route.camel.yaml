@@ -44,6 +44,16 @@
       parameters:
         path: /api/secure
       steps:
+        # The platform-http consumer exposes request headers as X-Username and
+        # X-Password. Camel Shiro consumes its own internal header names.
+        - setHeader:
+            name: CamelShiroSecurityUsername
+            simple:
+              expression: ${header.X-Username}
+        - setHeader:
+            name: CamelShiroSecurityPassword
+            simple:
+              expression: ${header.X-Password}
         - policy:
             id: shiro-policy
             ref: shiroPolicy
