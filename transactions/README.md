@@ -31,7 +31,7 @@ This is a transaction demonstration scenario where:
 Install the forage plugin:
 
 ```bash
-camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
 ```
 
 ### PostgreSQL
@@ -45,7 +45,7 @@ postgres` starts with):
 ```bash
 docker run -d --name camel-postgres -p 5432:5432 \
   -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test -e POSTGRES_DB=postgres \
-  postgres:16 -c max_prepared_transactions=100
+  postgres:17.5-alpine -c max_prepared_transactions=100
 ```
 
 (Alternatively, on an existing server: `ALTER SYSTEM SET max_prepared_transactions = 100;`
@@ -69,14 +69,16 @@ camel infra run artemis
 
 ## Configuration
 
-### JDBC Configuration (`forage-datasource-factory.properties`)
+Both resources are configured in `application.properties`.
+
+### JDBC Configuration
 ```properties
 forage.jdbc.db.kind=postgresql
 forage.jdbc.transaction.enabled=true
 forage.jdbc.transaction.node.id=xa-node1
 ```
 
-### JMS Configuration (`forage-connectionfactory.properties`)
+### JMS Configuration
 ```properties
 forage.jms.kind=artemis
 forage.jms.transaction.enabled=true
@@ -184,8 +186,8 @@ You'll see transaction logs for both JMS and JDBC operations.
 The example can be exported to a Camel Spring Boot project via
 
 ```bash
-camel export transaction.camel.yaml forage-connectionfactory.properties forage-datasource-factory.properties \
- --runtime=spring-boot --directory=spring-boot-export
+camel export transaction.camel.yaml application.properties \
+ --runtime=spring-boot --dir=spring-boot-export
 ```
 
 ### Monitor Artemis Console
@@ -243,16 +245,16 @@ Other available policies registered by Camel Forage:
 The redelivery policy is configured on the Artemis broker side. By default, Artemis will redeliver messages a certain number of times before moving them to the DLQ. To customize this behavior, configure the broker's address settings.
 
 ### Change Transaction Timeout
-In both configuration files:
+For both resources:
 ```properties
-jdbc.transaction.timeout.seconds=60
-jms.transaction.timeout.seconds=60
+forage.jdbc.transaction.timeout.seconds=60
+forage.jms.transaction.timeout.seconds=60
 ```
 
 ### Enable Additional Recovery
 ```properties
-jdbc.transaction.enable.recovery=true
-jms.transaction.enable.recovery=true
+forage.jdbc.transaction.enable.recovery=true
+forage.jms.transaction.enable.recovery=true
 ```
 
 ## Common Issues
@@ -260,8 +262,8 @@ jms.transaction.enable.recovery=true
 ### Transaction Timeout
 If processing takes > 30 seconds, transaction times out. Increase timeout:
 ```properties
-jdbc.transaction.timeout.seconds=60
-jms.transaction.timeout.seconds=60
+forage.jdbc.transaction.timeout.seconds=60
+forage.jms.transaction.timeout.seconds=60
 ```
 
 ### Database Connection Issues

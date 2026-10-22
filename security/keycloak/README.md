@@ -6,7 +6,7 @@ This example demonstrates how to use Camel Forage to automatically configure a K
 
 1. **Forage plugin** installed:
    ```bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
    ```
 
 2. **Keycloak** running on `localhost:8180`:

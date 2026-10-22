@@ -7,7 +7,7 @@ This example demonstrates how to use Camel Forage with XA transactions for relia
 **Forage plugin** installed:
 
 ```bash
-camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
 ```
 
 ActiveMQ Artemis running on `localhost:61616`:
@@ -21,24 +21,19 @@ Or with plain docker
 docker run -it --rm \
   -p 61616:61616 \
   -p 8161:8161 \
-  -e ARTEMIS_USERNAME=artemis \
+  -e ARTEMIS_USER=artemis \
   -e ARTEMIS_PASSWORD=artemis \
-  apache/activemq-artemis:latest
-```
-
-Or use Camel JBang:
-```bash
-camel infra run artemis
+  apache/artemis:2.55.0
 ```
 
 ## Configuration
 
-The `forage-connectionfactory.properties` file enables XA transactions:
+The `application.properties` file enables XA transactions:
 
 ```properties
-jms.transaction.enabled=true
-jms.transaction.timeout.seconds=30
-jms.transaction.enable.recovery=true
+forage.jms.transaction.enabled=true
+forage.jms.transaction.timeout.seconds=30
+forage.jms.transaction.enable.recovery=true
 ```
 
 When transactions are enabled, Camel Forage will:
@@ -50,7 +45,7 @@ When transactions are enabled, Camel Forage will:
 ## What Happens
 
 ### Normal Flow (70% of messages)
-1. **Producer**: Sends a message to `input.queue` every 10 seconds
+1. **Producer**: Sends a message to `input.queue` every 5 seconds
 2. **Transactional Consumer**:
    - Begins XA transaction
    - Processes the message
@@ -139,17 +134,19 @@ Watch:
 
 ### Custom Transaction Timeout
 ```properties
-jms.transaction.timeout.seconds=60
+forage.jms.transaction.timeout.seconds=60
 ```
 
-### Volatile Object Store (for testing)
+### Object Store Location
+The object store type is `file-system` (default) or `jdbc`:
 ```properties
-jms.transaction.object.store.type=volatile
+forage.jms.transaction.object.store.type=file-system
+forage.jms.transaction.object.store.directory=/var/lib/forage/tx-object-store
 ```
 
 ### Multiple Transaction Nodes
 ```properties
-jms.transaction.node.id=node1
+forage.jms.transaction.node.id=node1
 ```
 
 ## Use Cases

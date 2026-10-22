@@ -1,6 +1,3 @@
-// camel-k: dependency=mvn:io.kaoto.forage:forage-security-keycloak:1.3-SNAPSHOT
-// camel-k: dependency=mvn:io.kaoto.forage:forage-core-security:1.3-SNAPSHOT
-// camel-k: dependency=mvn:io.kaoto.forage:forage-core-common:1.3-SNAPSHOT
 // camel-k: dependency=mvn:org.apache.camel:camel-keycloak
 package com.foo.acme;
 

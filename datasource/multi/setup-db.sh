@@ -2,7 +2,7 @@
 # Setup database schema for the Multi-Datasource example
 # Requires:
 #   - PostgreSQL running on localhost:5432 (start with: camel infra run postgres)
-#   - MySQL running on localhost:3306 (start with: docker run -e MYSQL_ROOT_PASSWORD=pwd -p3306:3306 mysql:latest)
+#   - MySQL running on localhost:3306 (start with: docker run -e MYSQL_ROOT_PASSWORD=pwd -p3306:3306 mysql:8.4)
 
 set -e
 

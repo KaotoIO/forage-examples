@@ -9,7 +9,7 @@ This project demonstrates how to use Camel Forage to run Apache Camel routes tha
 - Maven (for Spring Boot export)
 - **Forage plugin** installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
   ```
 
 ## Database Setup
@@ -19,7 +19,7 @@ This project demonstrates how to use Camel Forage to run Apache Camel routes tha
 Start a MySQL container:
 
 ```bash
-docker run -e MYSQL_ROOT_PASSWORD=pwd -p3306:3306 mysql:latest
+docker run -e MYSQL_ROOT_PASSWORD=pwd -p3306:3306 mysql:8.4
 ```
 
 **Connection Details:**

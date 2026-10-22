@@ -1,15 +1,15 @@
 # Camel Forage naive AI RAG Example
 
-This example demonstrates how to use Camel Forage to automatically configure an AI agent with RAG model based on the lcal file.
+This example demonstrates how to use Camel Forage to automatically configure an AI agent with RAG model based on a local file.
 
 ## Prerequisites
 
 1. **Forage plugin** installed:
    ```bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
    ```
 
-2. **Ollama** running on `http://localhost:11434` with `granite4:3b` and `nomic-embed-text` models.
+2. **Ollama** running on `http://localhost:11434` with `granite4:3b` and `granite-embedding` models.
    Follow https://docs.ollama.com/quickstart for the installation instructions.
 
 ## Configuration
@@ -17,7 +17,7 @@ This example demonstrates how to use Camel Forage to automatically configure an 
 The `forage-agent-factory.properties` file configures the AI agent:
 
 - **chat model**: Provided by `ollama` - model **granite4:3b**
-- **embedding model**: Provided by `ollama` - model **nomic-embed-text**
+- **embedding model**: Provided by `ollama` - model **granite-embedding:latest**
 - **knowledge base**: `company-knowledge-base.txt` - file with information used to populate in-memory embedding store
 
 ## Running the Example
@@ -26,8 +26,8 @@ The `forage-agent-factory.properties` file configures the AI agent:
 
 ```bash
 camel run main-route.camel.yaml forage-agent-factory.properties company-knowledge-base.txt  \
-      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.6-SNAPSHOT \
-      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.6-SNAPSHOT
+      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.6.1 \
+      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.6.1
 ```
 
 The forage plugin auto-discovers most dependencies from the properties files. The RAG-specific dependencies (`forage-in-memory-store` and `forage-default-retrieval-augmentor`) still need to be specified explicitly (see [KaotoIO/forage#229](https://github.com/KaotoIO/forage/issues/229)).
