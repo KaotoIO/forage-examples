@@ -16,13 +16,13 @@ with database setup, configuration, execution, verification, and cleanup steps.
 ## Prerequisites
 
 - Java 17 or later
-- [Camel JBang](https://camel.apache.org/manual/camel-jbang.html) 4.22.1 or later
+- [Camel JBang](https://camel.apache.org/manual/camel-jbang.html) 4.22.2 or later
 - Docker or Podman
 - `curl`
-- The Forage plugin, version 1.6.1 or later:
+- The Forage plugin, version 1.6.2 or later:
 
   ```bash
-  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
   ```
 
   Verify the installed plugin with `camel plugin get`.

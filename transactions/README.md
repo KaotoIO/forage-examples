@@ -31,7 +31,7 @@ This is a transaction demonstration scenario where:
 Install the forage plugin:
 
 ```bash
-camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
 ```
 
 ### PostgreSQL
