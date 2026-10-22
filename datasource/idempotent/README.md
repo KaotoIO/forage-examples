@@ -19,7 +19,7 @@ The integration monitors the `data/inbox` directory for files and uses a Postgre
 - PostgreSQL accessible (default: localhost:5432)
 - **Forage plugin** installed:
   ```bash
-  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
   ```
 
 ## Configuration

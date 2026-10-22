@@ -6,7 +6,7 @@ This example demonstrates how to use Camel Forage to automatically configure an 
 
 1. **Forage plugin** installed:
    ```bash
-   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
    ```
 
 2. **Ollama** running on `http://localhost:11434` with `granite4:3b` and `granite-embedding` models.
@@ -26,8 +26,8 @@ The `application.properties` file configures the AI agent:
 
 ```bash
 camel run main-route.camel.yaml application.properties company-knowledge-base.txt  \
-      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.6.1 \
-      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.6.1
+      --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.6.2 \
+      --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.6.2
 ```
 
 The forage plugin auto-discovers most dependencies from the properties files. The RAG-specific dependencies (`forage-in-memory-store` and `forage-default-retrieval-augmentor`) still need to be specified explicitly (see [KaotoIO/forage#229](https://github.com/KaotoIO/forage/issues/229)).

@@ -8,7 +8,7 @@ This is a common enterprise scenario: you have a legacy SOAP service (SAP, ERP, 
 
 - **Camel JBang** with the Forage plugin installed:
   ```bash
-  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
   ```
 - **A running SOAP service** to call. You can use the companion [SOAP Server example](../soap-server/) as the target:
   ```bash

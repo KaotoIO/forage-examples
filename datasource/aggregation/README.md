@@ -35,7 +35,7 @@ The aggregation completes when either condition is met:
 
 1. **Install the Forage plugin**:
    ```bash
-   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.2
    ```
 
 2. **Start PostgreSQL**
