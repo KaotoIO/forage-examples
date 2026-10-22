@@ -14,7 +14,7 @@ This example demonstrates how to use Camel Forage to automatically configure an 
 
 ## Configuration
 
-The `forage-agent-factory.properties` file configures the AI agent:
+The `application.properties` file configures the AI agent:
 
 - **chat model**: Provided by `ollama` - model **granite4:3b**
 - **embedding model**: Provided by `ollama` - model **granite-embedding:latest**
@@ -25,7 +25,7 @@ The `forage-agent-factory.properties` file configures the AI agent:
 ### Using Camel JBang (Java DSL)
 
 ```bash
-camel run main-route.camel.yaml forage-agent-factory.properties company-knowledge-base.txt  \
+camel run main-route.camel.yaml application.properties company-knowledge-base.txt  \
       --dep=mvn:io.kaoto.forage:forage-in-memory-store:1.6.1 \
       --dep=mvn:io.kaoto.forage:forage-default-retrieval-augmentor:1.6.1
 ```
@@ -52,7 +52,7 @@ The response is written into console. Based on the information from the `company
 
 When the route is started without the RAG, use the command:
 ```bash
-camel run main-route.camel.yaml forage-agent-factory.properties company-knowledge-base.txt
+camel run main-route.camel.yaml application.properties company-knowledge-base.txt
 ```
 
 The response does not contain full refund confirmation and should contain a disclaimer, that the terms may vary.

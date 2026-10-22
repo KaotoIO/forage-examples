@@ -1,5 +1,5 @@
 camel export --runtime=spring-boot \
-	--dir=csb-example multi-agent.camel.yaml forage-agent-factory.properties
+	--dir=csb-example multi-agent.camel.yaml application.properties
 
 # then, to run:
 # cd csb-example
