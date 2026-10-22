@@ -8,7 +8,7 @@ This is a common enterprise scenario: you have a legacy SOAP service (SAP, ERP, 
 
 - **Camel JBang** with the Forage plugin installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
   ```
 - **A running SOAP service** to call. You can use the companion [SOAP Server example](../soap-server/) as the target:
   ```bash
@@ -21,28 +21,28 @@ The `application.properties` file maps directly to the WSDL structure of the tar
 
 ```properties
 # Service endpoint address
-forage.cxf.address=http://localhost:8080/services/hello
+forage.helloClient.cxf.address=http://localhost:8080/services/hello
 
 # WSDL location for service metadata discovery
-forage.cxf.wsdl.url=http://localhost:8080/services/hello?wsdl
+forage.helloClient.cxf.wsdl.url=http://localhost:8080/services/hello?wsdl
 
 # Service and port names (from the WSDL <service> and <port> elements)
-forage.cxf.service.name={http://example.com/hello}HelloService
-forage.cxf.port.name={http://example.com/hello}HelloPort
+forage.helloClient.cxf.service.name={http://example.com/hello}HelloService
+forage.helloClient.cxf.port.name={http://example.com/hello}HelloPort
 
 # Data format: PAYLOAD sends/receives raw XML elements
-forage.cxf.data.format=PAYLOAD
+forage.helloClient.cxf.data.format=PAYLOAD
 
 # Enable CXF message logging for request/response tracing
-forage.cxf.logging.enabled=true
+forage.helloClient.cxf.logging.enabled=true
 ```
 
-Forage reads these properties and creates a fully configured `CxfEndpoint` bean registered as `cxfEndpoint` in the Camel registry.
+Forage reads these properties and creates a fully configured `CxfEndpoint` bean registered as `helloClient` in the Camel registry (the bean name is the `helloClient` prefix).
 
 ## What Happens
 
-1. Forage creates a CXF SOAP endpoint from the properties and binds it as `cxfEndpoint` in the Camel registry
-2. The route fires once, constructs a SOAP XML body, and sends it to `cxf:bean:cxfEndpoint`
+1. Forage creates a CXF SOAP endpoint from the properties and binds it as `helloClient` in the Camel registry
+2. The route fires once, constructs a SOAP XML body, and sends it to `cxf:bean:helloClient`
 3. CXF handles WSDL binding, SOAP envelope wrapping, and HTTP transport
 4. The SOAP response is logged
 

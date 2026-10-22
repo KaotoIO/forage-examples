@@ -5,26 +5,30 @@ This example demonstrates how to use Camel Forage to automatically configure a S
 == Prerequisites
 
 . *Forage plugin* installed:
- `bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.4-SNAPSHOT
-`
++
+[source,bash]
+----
+camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
+----
 
 . *RabbitMQ* running on `localhost:5672`
- `bash
-   camel infra run rabbitmq
-`
-
-or
-
-`bash
-   # Using Docker
-   docker run -it --rm \
-     -p 5672:5672 \
-     -p 15672:15672 \
-     -e RABBITMQ_DEFAULT_USER=guest \
-     -e RABBITMQ_DEFAULT_PASS=guest \
-     rabbitmq:3-management
-`
++
+[source,bash]
+----
+camel infra run rabbitmq
+----
++
+or, using Docker:
++
+[source,bash]
+----
+docker run -it --rm \
+  -p 5672:5672 \
+  -p 15672:15672 \
+  -e RABBITMQ_DEFAULT_USER=guest \
+  -e RABBITMQ_DEFAULT_PASS=guest \
+  rabbitmq:4-management
+----
 
 The RabbitMQ management UI will be available at http://localhost:15672 (guest/guest)
 
@@ -79,7 +83,7 @@ Export the project to a Spring Boot or Quarkus application:
 ----
 camel export route.camel.yaml application.properties \
   --runtime=spring-boot \
-  --gav=com.foo:acme:1.4-SNAPSHOT \
+  --gav=com.foo:acme:1.0-SNAPSHOT \
   --dir=spring-boot-rabbitmq
 ----
 
@@ -114,5 +118,5 @@ mvn clean compile quarkus:dev
 
 == Additional Features
 
-Forage supports multiple connection factories using prefixed configuration (e.g., `forage.primary.spring.rabbitmq.host`), cluster failover with the `addresses` property, and different cache modes.
+Forage supports multiple connection factories using prefixed configuration (e.g., `forage.primary.rabbitmq.host`), cluster failover with the `addresses` property, and different cache modes.
 See the https://kaotoio.github.io/forage/modules/spring-rabbitmq/[Forage Spring RabbitMQ documentation] for more details.

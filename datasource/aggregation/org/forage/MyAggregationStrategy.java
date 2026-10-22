@@ -1,7 +1,3 @@
-///usr/bin/env jbang "$0" "$@" ; exit $?
-//DEPS org.apache.camel:camel-bom:4.16.0@pom
-//DEPS org.apache.camel:camel-main
-
 package org.forage;
 
 import org.apache.camel.AggregationStrategy;

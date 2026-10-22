@@ -6,7 +6,7 @@ public class Route extends RouteBuilder {
     public void configure() throws Exception {
 
         // Producer - sends messages to input queue
-        from("timer:producer?period=10000")
+        from("timer:producer?period=5000")
                 .setBody(constant("Transactional message"))
                 .to("jms:queue:input.queue")
                 .log("Sent message to input queue");

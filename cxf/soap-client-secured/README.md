@@ -8,7 +8,7 @@ In enterprise environments, SOAP services are typically protected by TLS certifi
 
 - **Camel JBang** with the Forage plugin installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
   ```
 - **Docker** (for the WireMock HTTPS mock server)
 - **keytool** (included with Java)
@@ -78,25 +78,25 @@ The truststore contains the server's certificate (or CA), allowing the CXF clien
 
 ```properties
 # CXF SOAP configuration
-forage.cxf.address=https://localhost:8443/ws/hello
-forage.cxf.wsdl.url=https://localhost:8443/ws/hello?wsdl
-forage.cxf.service.name={http://example.com/hello}HelloService
-forage.cxf.port.name={http://example.com/hello}HelloPort
-forage.cxf.data.format=PAYLOAD
-forage.cxf.logging.enabled=true
+forage.securedClient.cxf.address=https://localhost:8443/ws/hello
+forage.securedClient.cxf.wsdl.url=https://localhost:8443/ws/hello?wsdl
+forage.securedClient.cxf.service.name={http://example.com/hello}HelloService
+forage.securedClient.cxf.port.name={http://example.com/hello}HelloPort
+forage.securedClient.cxf.data.format=PAYLOAD
+forage.securedClient.cxf.logging.enabled=true
 
 # Authentication credentials
-forage.cxf.username=admin
-forage.cxf.password=secret
+forage.securedClient.cxf.username=admin
+forage.securedClient.cxf.password=secret
 
 # SSL/TLS -- references the SSLContextParameters bean by name
-forage.cxf.ssl.context.parameters=mySSLContext
+forage.securedClient.cxf.ssl.context.parameters=mySSLContext
 ```
 
 The key additions compared to the [basic SOAP client](../soap-client/):
 
-- `forage.cxf.username` / `forage.cxf.password` -- credentials sent with each SOAP request
-- `forage.cxf.ssl.context.parameters` -- references the `mySSLContext` bean that configures the TLS trust chain
+- `forage.securedClient.cxf.username` / `forage.securedClient.cxf.password` -- credentials sent with each SOAP request
+- `forage.securedClient.cxf.ssl.context.parameters` -- references the `mySSLContext` bean that configures the TLS trust chain
 
 ## What Happens
 

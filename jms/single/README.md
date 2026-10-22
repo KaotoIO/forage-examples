@@ -6,7 +6,7 @@ This example demonstrates how to use Camel Forage to automatically configure a J
 
 1. **Forage plugin** installed:
    ```bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
    ```
 
 2. **ActiveMQ Artemis** running on `localhost:61616`
@@ -19,16 +19,16 @@ This example demonstrates how to use Camel Forage to automatically configure a J
    docker run -it --rm \
      -p 61616:61616 \
      -p 8161:8161 \
-     -e ARTEMIS_USERNAME=artemis \
+     -e ARTEMIS_USER=artemis \
      -e ARTEMIS_PASSWORD=artemis \
-     apache/activemq-artemis:latest
+     apache/artemis:2.55.0
    ```
 
    Or download and run standalone: https://activemq.apache.org/components/artemis/download/
 
 ## Configuration
 
-The `forage-connectionfactory.properties` file configures the JMS connection:
+The `application.properties` file configures the JMS connection:
 
 - **JMS Kind**: `artemis` - Uses ActiveMQ Artemis provider
 - **Broker URL**: `tcp://localhost:61616` - Connection to Artemis broker
@@ -66,11 +66,11 @@ The forage plugin auto-discovers the required dependencies from the properties f
 
 ## Transaction Support (Optional)
 
-To enable XA transactions, update `forage-connectionfactory.properties`:
+To enable XA transactions, update `application.properties`:
 
 ```properties
-jms.transaction.enabled=true
-jms.transaction.timeout.seconds=30
+forage.jms.transaction.enabled=true
+forage.jms.transaction.timeout.seconds=30
 ```
 
 When transactions are enabled, Camel Forage will:
@@ -84,12 +84,12 @@ To configure multiple connection factories, use prefixes:
 
 ```properties
 # First connection factory
-broker1.jms.kind=artemis
-broker1.jms.broker.url=tcp://localhost:61616
+forage.broker1.jms.kind=artemis
+forage.broker1.jms.broker.url=tcp://localhost:61616
 
 # Second connection factory
-broker2.jms.kind=artemis
-broker2.jms.broker.url=tcp://localhost:61617
+forage.broker2.jms.kind=artemis
+forage.broker2.jms.broker.url=tcp://localhost:61617
 ```
 
 Then reference by name:
@@ -100,7 +100,7 @@ from("timer:test")
 
 ## Supported JMS Providers
 
-- **ActiveMQ Artemis** (`jms.kind=artemis`)
-- **IBM MQ** (`jms.kind=ibmmq`)
+- **ActiveMQ Artemis** (`forage.jms.kind=artemis`)
+- **IBM MQ** (`forage.jms.kind=ibmmq`)
 
-Add the corresponding dependency for your provider.
+The forage plugin adds the dependency for the selected provider automatically.

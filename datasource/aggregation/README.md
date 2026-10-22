@@ -35,7 +35,7 @@ The aggregation completes when either condition is met:
 
 1. **Install the Forage plugin**:
    ```bash
-   camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+   camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
    ```
 
 2. **Start PostgreSQL**
@@ -91,15 +91,16 @@ In this example:
 
 ## Configuration
 
-The `forage-datasource-factory.properties` configures the PostgreSQL connection and aggregation repository:
+The `application.properties` file configures the PostgreSQL connection and aggregation repository:
 
 ```properties
-jdbc.db.kind=postgresql
-jdbc.url=jdbc:postgresql://localhost:5432/postgres
+forage.jdbc.db.kind=postgresql
+forage.jdbc.url=jdbc:postgresql://localhost:5432/postgres
 
-jdbc.aggregation.repository.name=event_aggregation
+forage.jdbc.aggregation.repository.enabled=true
+forage.jdbc.aggregation.repository.name=event_aggregation
 
-jdbc.transaction.enabled=true
+forage.jdbc.transaction.enabled=true
 ```
 
 The aggregation repository reference `#event_aggregation` in the YAML route (event-batching.camel.yaml:19) maps to this configuration.

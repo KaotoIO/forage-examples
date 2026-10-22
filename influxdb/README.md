@@ -16,21 +16,18 @@ with database setup, configuration, execution, verification, and cleanup steps.
 ## Prerequisites
 
 - Java 17 or later
-- [Camel JBang](https://camel.apache.org/manual/camel-jbang.html) 4.22.0
+- [Camel JBang](https://camel.apache.org/manual/camel-jbang.html) 4.22.1 or later
 - Docker or Podman
 - `curl`
-- The Forage plugin with InfluxDB support, available in `1.6.1-SNAPSHOT`:
+- The Forage plugin, version 1.6.1 or later:
 
   ```bash
-  camel plugin add forage \
-    --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1-SNAPSHOT \
-    --repos=https://central.sonatype.com/repository/maven-snapshots/
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
   ```
 
   Verify the installed plugin with `camel plugin get`.
 
-Each properties file includes the snapshot repository so Camel can resolve the
-Forage factories. The plugin discovers the required dependencies automatically
+The plugin discovers the required dependencies automatically
 from the configuration; the run commands need no `--dep` flags.
 
 ## Choose an Example

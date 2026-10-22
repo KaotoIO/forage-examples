@@ -8,7 +8,7 @@ This is useful when you need to stand up a SOAP facade in front of modern servic
 
 - **Camel JBang** with the Forage plugin installed:
   ```bash
-  camel plugin add -g=io.kaoto.forage -a=camel-jbang-plugin-forage -v=1.6-SNAPSHOT
+  camel plugin add forage --gav=io.kaoto.forage:camel-jbang-plugin-forage:1.6.1
   ```
 
 ## Configuration

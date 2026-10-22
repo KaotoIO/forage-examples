@@ -1,6 +1,6 @@
 - route:
     id: google
-    description: This route uses an Agent that leverages Google Vertex
+    description: This route uses an Agent that leverages Google Gemini
     from:
       uri: timer
       parameters:
